@@ -3,6 +3,7 @@
 import React from 'react';
 import { Hero } from './_components/Hero';
 import { ClientStrip } from './_components/ClientStrip';
+import { ScrollVideoSection } from "./_components/ScrollVideoSection";
 import { ServicesIntro } from './_components/ServicesIntro';
 import { FeaturedWork } from './_components/FeaturedWork';
 import { StatsSection } from './_components/StatsSection';
@@ -26,6 +27,7 @@ export default function Home() {
     <>
       <Hero />
       <ClientStrip />
+      <ScrollVideoSection />
       <ServicesIntro />
       <FeaturedWork />
       <StatsSection />
