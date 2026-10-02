@@ -9,12 +9,14 @@ import { MagneticButton } from '@/components/ui/MagneticButton';
 import { AnimatedText } from '@/components/ui/AnimatedText';
 import { HeroVisual } from './HeroVisual';
 import { useCanHover } from '@/hooks/useMediaQuery';
+import { usePreloader } from '@/contexts/PreloaderContext';
 import { easeOut } from '@/utils/motion';
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const canHover = useCanHover();
+  const { isReady } = usePreloader();
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const sx = useSpring(mx, { stiffness: 70, damping: 20, mass: 0.6 });
@@ -37,7 +39,7 @@ export function Hero() {
 
   const fadeUp = (delay: number) => ({
     initial: { opacity: 0, y: 16 },
-    animate: { opacity: 1, y: 0 },
+    animate: isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 },
     transition: { duration: 0.6, ease: easeOut, delay }
   });
 
