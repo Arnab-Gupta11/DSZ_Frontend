@@ -120,3 +120,28 @@ export interface SocialLink {
   label: string;
   href: string;
 }
+export type JobDepartment = 'Development' | 'Design' | 'Marketing' | 'Video' | 'Operations';
+export type JobType = 'Full-time' | 'Part-time' | 'Internship' | 'Contract';
+export type JobLocation = 'On-site' | 'Remote' | 'Hybrid';
+
+export interface Job {
+  slug: string;
+  title: string;
+  department: JobDepartment;
+  type: JobType;
+  location: JobLocation;
+  city: string;
+  experience: string;
+  salary?: string;
+  /** ISO date */
+  postedAt: string;
+  /** ISO date */
+  deadline: string;
+  short: string;
+  overview: string;
+  responsibilities: string[];
+  requirements: string[];
+  niceToHave: string[];
+  tools: string[];
+  benefits: string[];
+}

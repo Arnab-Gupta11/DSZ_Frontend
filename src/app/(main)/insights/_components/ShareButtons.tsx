@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CheckIcon, LinkIcon } from 'lucide-react';
 import { FacebookIcon, LinkedInIcon, WhatsAppIcon, XIcon } from '@/components/ui/BrandIcons';
 
@@ -10,7 +10,12 @@ interface ShareButtonsProps {
 
 export function ShareButtons({ title }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false);
-  const url = typeof window !== 'undefined' ? window.location.href : '';
+  const [url, setUrl] = useState('');
+
+  useEffect(() => {
+    setUrl(window.location.href);
+  }, []);
+
   const u = encodeURIComponent(url);
   const t = encodeURIComponent(title);
 

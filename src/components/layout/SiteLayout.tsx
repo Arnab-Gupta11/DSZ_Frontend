@@ -8,6 +8,7 @@ import { Footer } from './Footer';
 import { WhatsAppButton } from './WhatsAppButton';
 import { CustomCursor } from './CustomCursor';
 import { PageTransition } from './PageTransition';
+import { FrozenRoute } from './FrozenRoute';
 import { CursorProvider } from '@/contexts/CursorContext';
 import { MotionConfig } from 'framer-motion';
 
@@ -26,7 +27,9 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
           <Header />
           <main id="main" tabIndex={-1} className="outline-none">
             <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo({ top: 0 })}>
-              <PageTransition key={pathname || 'root'}>{children}</PageTransition>
+              <PageTransition key={pathname || 'root'}>
+                <FrozenRoute>{children}</FrozenRoute>
+              </PageTransition>
             </AnimatePresence>
           </main>
           <Footer />
