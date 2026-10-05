@@ -1,13 +1,12 @@
 "use client";
 
-import React from 'react';
-import Link from 'next/link';
-
-import { motion } from 'framer-motion';
-import { ArrowRightIcon } from 'lucide-react';
-import { Reveal } from '@/components/ui/Reveal';
-import { useParallax } from '@/hooks/useParallax';
-import type { Service } from '@/types/content';
+import React from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { ArrowUpRightIcon, Compass } from "lucide-react";
+import { Reveal } from "@/components/ui/Reveal";
+import { useParallax } from "@/hooks/useParallax";
+import type { Service } from "@/types/content";
 
 interface ServiceCardProps {
   service: Service;
@@ -17,38 +16,66 @@ interface ServiceCardProps {
 
 export function ServiceCard({ service, index, parallax }: ServiceCardProps) {
   const { ref, y } = useParallax<HTMLDivElement>(parallax);
-  const Icon = service.icon;
 
   return (
-    <motion.div ref={ref} style={{ y }} className="h-full" suppressHydrationWarning>
-      <Reveal delay={index % 3 * 0.08} className="h-full">
-        <Link href={`/services#${service.slug}`}
-          className="group relative flex h-full min-h-[300px] flex-col overflow-hidden rounded-2xl border border-line bg-surface p-7 transition-[transform,border-color,background-color,box-shadow] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-2 hover:border-line-accent hover:bg-surface-hover hover:shadow-[0_28px_60px_-30px_rgba(2,224,223,0.45)] lg:p-8">
-          
-          <span
-            aria-hidden
-            className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-            style={{ background: 'radial-gradient(circle, rgba(2,224,223,0.16), transparent 70%)' }} />
-          
-          <div className="relative flex items-start justify-between">
-            <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-line bg-navy-700 text-cyan transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-rotate-6 group-hover:scale-105">
-              <Icon className="h-5 w-5" aria-hidden />
-            </span>
-            <span className="font-display text-sm font-medium tabular-nums text-fg-3">{service.number}</span>
+    <motion.div
+      ref={ref}
+      style={{ y }}
+      className="h-full"
+      suppressHydrationWarning
+    >
+      <Reveal delay={(index % 3) * 0.08} className="h-full">
+        <Link
+          href={`/services#${service.slug}`}
+          className="group relative flex h-full min-h-[340px] flex-col overflow-hidden rounded-2xl bg-navy-800 transition-transform duration-300 hover:-translate-y-2"
+        >
+          {/* Background Image */}
+          <div className="absolute inset-0 z-0">
+            <img
+              src={service.image}
+              alt={service.title}
+              className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-110"
+            />
           </div>
-          <h3 className="relative mt-10 font-display text-2xl font-bold tracking-[-0.02em] text-white">
-            {service.title}
-          </h3>
-          <p className="relative mt-3 text-[15px] leading-relaxed text-fg-2">{service.short}</p>
-          <span className="relative mt-auto flex items-center gap-2 pt-8 text-sm font-medium text-white">
-            Explore service
-            <ArrowRightIcon
-              aria-hidden
-              className="h-4 w-4 text-cyan transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-[5px]" />
-            
-          </span>
+
+          {/* Top Gradient */}
+          <div className="absolute inset-x-0 top-0 z-10 h-[55%] bg-gradient-to-b from-black/80 via-black/40 to-transparent" />
+
+          {/* Bottom Gradient */}
+          <div className="absolute inset-x-0 bottom-0 z-10 h-[55%] bg-gradient-to-t from-black/95 via-black/70 to-transparent" />
+
+          {/* Content Container */}
+          <div className="relative z-20 flex h-full flex-col justify-between p-5 lg:p-7">
+            {/* Top Text (Service Title) */}
+            <h3 className="max-w-[90%] font-display text-2xl font-bold leading-tight tracking-tight text-white lg:text-3xl">
+              {service.title}
+            </h3>
+
+            {/* Bottom Content */}
+            <div className="mt-auto flex flex-col gap-6">
+              {/* Description */}
+              {/* <p className="text-[15px] font-medium leading-relaxed text-white/90">
+                {service.short}
+              </p> */}
+
+              {/* Footer Section */}
+              <div className="flex items-end justify-between border-t border-white/20 pt-5">
+                <div className="flex items-center gap-2 text-white">
+                  <Compass className="h-5 w-5 text-cyan" />
+                  <span className="font-display text-sm font-medium lowercase tracking-wide">
+                    {service.category}
+                  </span>
+                </div>
+
+                {/* Cyan Action Button matching theme */}
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-cyan text-navy transition-[transform,background-color] duration-300 group-hover:rotate-45 group-hover:scale-105 group-hover:bg-white">
+                  <ArrowUpRightIcon className="h-5 w-5" strokeWidth={2.5} />
+                </div>
+              </div>
+            </div>
+          </div>
         </Link>
       </Reveal>
-    </motion.div>);
-
+    </motion.div>
+  );
 }

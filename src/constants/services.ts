@@ -16,7 +16,8 @@ export const services: Service[] = [
   deliverables: ['Brand strategy deck', 'Logo & identity suite', 'Brand guidelines', 'Messaging framework'],
   whoFor: 'New brands preparing to launch, and growing brands that have outgrown how they look and talk.',
   icon: CompassIcon,
-  visual: 'brand'
+  visual: 'brand',
+  image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800'
 },
 {
   slug: 'digital-marketing',
@@ -30,7 +31,8 @@ export const services: Service[] = [
   deliverables: ['Monthly content plan', 'Ad campaigns & creatives', 'Audience targeting setup', 'Monthly performance report'],
   whoFor: 'Product and lifestyle brands that sell online and want steady, measurable growth.',
   icon: MegaphoneIcon,
-  visual: 'marketing'
+  visual: 'marketing',
+  image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800'
 },
 {
   slug: 'graphic-design',
@@ -44,7 +46,8 @@ export const services: Service[] = [
   deliverables: ['Creative templates', 'Packaging artwork', 'Print-ready files', 'Campaign visual kits'],
   whoFor: 'Perfume, clothing, watch and accessory brands where the product has to look irresistible.',
   icon: PenToolIcon,
-  visual: 'design'
+  visual: 'design',
+  image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=800'
 },
 {
   slug: 'video-production',
@@ -58,7 +61,8 @@ export const services: Service[] = [
   deliverables: ['Product films', 'Reels packs', 'Brand story video', 'Cut-downs for ads'],
   whoFor: 'Brands whose customers discover them on social feeds first.',
   icon: ClapperboardIcon,
-  visual: 'video'
+  visual: 'video',
+  image: 'https://images.unsplash.com/photo-1574717024453-354056aafd0c?auto=format&fit=crop&q=80&w=800'
 },
 {
   slug: 'web-app-development',
@@ -72,7 +76,8 @@ export const services: Service[] = [
   deliverables: ['Responsive website', 'Online store setup', 'Admin / CMS training', 'Launch & support'],
   whoFor: 'Businesses that need a website that actually sells, not just a digital brochure.',
   icon: MonitorSmartphoneIcon,
-  visual: 'web'
+  visual: 'web',
+  image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800'
 },
 {
   slug: 'business-automation',
@@ -86,5 +91,6 @@ export const services: Service[] = [
   deliverables: ['Automation blueprint', 'Connected tool stack', 'Live dashboards', 'Team handover docs'],
   whoFor: 'Growing companies where manual processes are starting to slow everything down.',
   icon: WorkflowIcon,
-  visual: 'automation'
+  visual: 'automation',
+  image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800'
 }];

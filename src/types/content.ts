@@ -18,6 +18,7 @@ export interface Service {
   whoFor: string;
   icon: LucideIcon;
   visual: ServiceVisualKind;
+  image: string;
 }
 
 export interface ProjectResult {
