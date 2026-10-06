@@ -1,21 +1,23 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 
+// Hydration safe useMediaQuery
 export function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = useState<boolean>(() =>
-  typeof window !== 'undefined' ? window.matchMedia(query).matches : false
-  );
+  const [matches, setMatches] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const mq = window.matchMedia(query);
-    const handler = () => setMatches(mq.matches);
-    handler();
+    setMatches(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setMatches(e.matches);
     mq.addEventListener('change', handler);
     return () => mq.removeEventListener('change', handler);
   }, [query]);
 
-  return matches;
+  // Return false during SSR and initial hydration to prevent mismatch
+  return mounted ? matches : false;
 }
 
 export function useCanHover(): boolean {
