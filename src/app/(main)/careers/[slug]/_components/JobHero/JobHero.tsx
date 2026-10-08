@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { JobMetaChips } from '@/components/careers/JobMetaChips/JobMetaChips';
 import { formatDate } from '@/utils/date';
 import { easeOut } from '@/utils/motion';
-import type { Job } from '@/types/content';
+import type { IJob } from "@/types/api";
 
 const fade = (delay: number) => ({
   initial: { opacity: 0, y: 16 },
@@ -18,7 +18,7 @@ const fade = (delay: number) => ({
   transition: { duration: 0.6, ease: easeOut, delay }
 });
 
-export function JobHero({ job, closed }: {job: Job;closed: boolean;}) {
+export function JobHero({ job, closed }: {job: IJob;closed: boolean;}) {
   return (
     <section className="relative isolate overflow-hidden bg-navy pb-16 pt-32 lg:pb-24 lg:pt-44">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">

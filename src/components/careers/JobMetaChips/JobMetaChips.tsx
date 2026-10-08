@@ -1,9 +1,9 @@
 import React from 'react';
 import { BriefcaseIcon, ClockIcon, GraduationCapIcon, MapPinIcon } from 'lucide-react';
-import type { Job } from '@/types/content';
+import type { IJob } from "@/types/api";
 
 interface JobMetaChipsProps {
-  job: Job;
+  job: IJob;
   tone?: 'light' | 'dark';
   showDepartment?: boolean;
   showExperience?: boolean;

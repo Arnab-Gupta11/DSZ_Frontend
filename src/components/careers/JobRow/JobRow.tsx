@@ -6,10 +6,10 @@ import { motion } from 'framer-motion';
 import { ArrowUpRightIcon } from 'lucide-react';
 import { JobMetaChips } from '../JobMetaChips/JobMetaChips';
 import { easeOut } from '@/utils/motion';
-import type { Job } from '@/types/content';
+import type { IJob } from "@/types/api";
 
 interface JobRowProps {
-  job: Job;
+  job: IJob;
   index?: number;
 }
 

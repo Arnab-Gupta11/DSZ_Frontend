@@ -4,11 +4,10 @@ import React from 'react';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { JobRow } from '@/components/careers/JobRow/JobRow';
-import { jobs } from '@/constants/jobs';
-import type { Job } from '@/types/content';
+import type { IJob } from "@/types/api";
 
-export function RelatedJobs({ job }: {job: Job;}) {
-  const others = jobs.filter((j) => j.slug !== job.slug);
+export function RelatedJobs({ job, allJobs }: {job: IJob; allJobs: IJob[]}) {
+  const others = allJobs.filter((j) => j.slug !== job.slug);
   const related = [
   ...others.filter((j) => j.department === job.department),
   ...others.filter((j) => j.department !== job.department)].

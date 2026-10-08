@@ -39,7 +39,7 @@ export function FileDropzone({ id, value, onChange, hasError }: FileDropzoneProp
   };
 
   return (
-    <div>
+    <div className="w-full min-w-0">
       <input
         ref={inputRef}
         id={id}
@@ -58,7 +58,7 @@ export function FileDropzone({ id, value, onChange, hasError }: FileDropzoneProp
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.2 }}
-          className="flex items-center gap-4 rounded-2xl border border-line-accent bg-cyan/5 p-4">
+          className="flex w-full items-center gap-4 rounded-2xl border border-line-accent bg-cyan/5 p-4">
           
             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-navy-700 text-cyan">
               <FileTextIcon aria-hidden className="h-5 w-5" />
