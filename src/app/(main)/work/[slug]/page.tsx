@@ -8,11 +8,14 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const p = await params;
   try {
     const response = await api.getWorkBySlug(p.slug);
     const work = response.data;
+    console.log("Work============>", work);
     if (!work) return {};
 
     return {
@@ -36,7 +39,7 @@ export default async function WorkDetailPage({ params }: PageProps) {
   try {
     const response = await api.getWorkBySlug(p.slug);
     project = response.data;
-    
+
     // We fetch all works to determine the next project
     const worksResponse = await api.getWorks();
     allWorks = worksResponse.data || [];
@@ -49,9 +52,10 @@ export default async function WorkDetailPage({ params }: PageProps) {
   }
 
   const currentIndex = allWorks.findIndex((w) => w.slug === project.slug);
-  const nextProject = currentIndex >= 0 && currentIndex < allWorks.length - 1
-    ? allWorks[currentIndex + 1]
-    : allWorks[0] || null;
+  const nextProject =
+    currentIndex >= 0 && currentIndex < allWorks.length - 1
+      ? allWorks[currentIndex + 1]
+      : allWorks[0] || null;
 
   return <WorkDetailClient project={project} nextProject={nextProject} />;
 }

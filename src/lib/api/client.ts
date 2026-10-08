@@ -44,10 +44,16 @@ async function fetchApi<T>(
 }
 
 export const api = {
-  getWorks: () => 
-    fetchApi<IWork[]>('/works', {
-      next: { tags: ['works'], revalidate: 60 },
-    }),
+  getWorks: (params?: { service?: string; page?: number; limit?: number }) => {
+    const searchParams = new URLSearchParams();
+    if (params?.service) searchParams.append('service', params.service);
+    if (params?.page) searchParams.append('page', params.page.toString());
+    if (params?.limit) searchParams.append('limit', params.limit.toString());
+    const query = searchParams.toString();
+    return fetchApi<IWork[]>(`/works${query ? `?${query}` : ''}`, {
+      cache: 'no-store', // Force fresh data for filtered lists
+    });
+  },
     
   getWorkBySlug: (slug: string) => 
     fetchApi<IWork>(`/works/${slug}`, {

@@ -4,12 +4,18 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowLeftIcon, ArrowRightIcon, InfoIcon } from "lucide-react";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  InfoIcon,
+  CheckIcon,
+} from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { AnimatedText } from "@/components/ui/AnimatedText";
 import { Reveal } from "@/components/ui/Reveal";
 import { FinalCta } from "@/components/cta/FinalCta";
 import { easeOut } from "@/utils/motion";
+import { HeroSlider } from "./HeroSlider";
 import type { IWork } from "@/types/api";
 
 interface WorkDetailClientProps {
@@ -17,7 +23,10 @@ interface WorkDetailClientProps {
   nextProject: IWork | null;
 }
 
-export function WorkDetailClient({ project, nextProject }: WorkDetailClientProps) {
+export function WorkDetailClient({
+  project,
+  nextProject,
+}: WorkDetailClientProps) {
   const meta = [
     { label: "Client", value: project.client },
     { label: "Services", value: project.services?.join(", ") || "" },
@@ -99,13 +108,9 @@ export function WorkDetailClient({ project, nextProject }: WorkDetailClientProps
             transition={{ duration: 0.8, ease: easeOut, delay: 0.3 }}
             className="relative overflow-hidden rounded-[28px] bg-navy-700"
           >
-            <Image
-              src={project.heroImages?.[0]?.src || '/placeholder-image.jpg'}
-              alt={project.heroImages?.[0]?.alt || project.title}
-              width={1600}
-              height={900}
-              priority
-              className="aspect-16/10 w-full object-cover lg:aspect-21/10"
+            <HeroSlider
+              images={project.heroImages || []}
+              title={project.title}
             />
           </motion.div>
         </Container>
@@ -137,7 +142,13 @@ export function WorkDetailClient({ project, nextProject }: WorkDetailClientProps
       >
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-            <Reveal className="lg:col-span-4">
+            <Reveal
+              className={
+                project.gallery?.length === 1
+                  ? "lg:col-span-6 lg:pr-10"
+                  : "lg:col-span-4"
+              }
+            >
               <h2
                 id="execution-title"
                 className="font-display text-3xl font-bold tracking-[-0.03em] text-white lg:text-4xl"
@@ -149,14 +160,22 @@ export function WorkDetailClient({ project, nextProject }: WorkDetailClientProps
               </p>
               <ul className="mt-8 divide-y divide-line border-y border-line">
                 {project.executionPoints?.map((pt) => (
-                  <li key={pt} className="py-3.5 text-[15px] text-white">
+                  <li
+                    key={pt}
+                    className="flex items-start gap-4 py-4 text-[15px] text-white"
+                  >
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-cyan/10 text-cyan">
+                      <CheckIcon className="h-3.5 w-3.5" aria-hidden />
+                    </span>
                     {pt}
                   </li>
                 ))}
               </ul>
             </Reveal>
-            <div className="grid gap-5 sm:grid-cols-2 lg:col-span-8">
-              {project.gallery?.map((img, i) => (
+            <div
+              className={`grid items-start gap-5 ${project.gallery?.length === 1 ? "sm:grid-cols-1 lg:col-span-6" : "sm:grid-cols-2 lg:col-span-8"}`}
+            >
+              {project.gallery?.slice(0, 2).map((img, i) => (
                 <motion.div
                   key={img.src}
                   initial={{ clipPath: "inset(0% 0% 100% 0% round 20px)" }}
@@ -221,7 +240,7 @@ export function WorkDetailClient({ project, nextProject }: WorkDetailClientProps
             <h2 id="gallery-title" className="sr-only">
               Gallery
             </h2>
-            <motion.div
+            {/* <motion.div
               initial={{
                 clipPath: "inset(8% 8% 8% 8% round 28px)",
                 opacity: 0.4,
@@ -241,7 +260,7 @@ export function WorkDetailClient({ project, nextProject }: WorkDetailClientProps
                 height={900}
                 className="aspect-video w-full object-cover"
               />
-            </motion.div>
+            </motion.div> */}
 
             {nextProject && (
               <Link
@@ -274,4 +293,3 @@ export function WorkDetailClient({ project, nextProject }: WorkDetailClientProps
     </>
   );
 }
-
