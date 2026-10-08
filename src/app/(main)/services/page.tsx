@@ -1,72 +1,37 @@
-"use client";
-
-import React, { useEffect } from 'react';
-import { usePathname } from 'next/navigation';
-
+import React from 'react';
 import { PageHero } from '@/components/ui/PageHero';
-import { Container } from '@/components/ui/Container';
 import { ServiceDetail } from './_components/ServiceDetail';
+import { ServicesNav } from './_components/ServicesNav';
 import { FinalCta } from '@/components/cta/FinalCta';
-import { services } from '@/constants/services';
-import { useSeo } from '@/hooks/useSeo';
+import { api } from '@/lib/api/client';
 
-export default function Services() {
-  const pathname = usePathname();
+export const metadata = {
+  title: 'Services | Digital Soft Zone',
+  description: 'Brand strategy, digital marketing, graphic design, video production, web & app development and business automation from Digital Soft Zone.',
+};
 
-  useSeo({
-    title: 'Services',
-    description:
-    'Brand strategy, digital marketing, graphic design, video production, web & app development and business automation from Digital Soft Zone.',
-    path: '/services'
-  });
-
-  useEffect(() => {
-    if (!(typeof window !== 'undefined' ? window.location.hash : '')) return;
-    const id = (typeof window !== 'undefined' ? window.location.hash : '').slice(1);
-    const t = window.setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 120);
-    return () => window.clearTimeout(t);
-  }, [(typeof window !== 'undefined' ? window.location.hash : '')]);
-
-  const jumpTo = (e: React.MouseEvent<HTMLAnchorElement>, slug: string) => {
-    e.preventDefault();
-    document.getElementById(slug)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    window.history.replaceState(null, '', `#${slug}`);
-  };
+export default async function ServicesPage() {
+  const response = await api.getServices();
+  const services = response.data || [];
 
   return (
     <>
       <PageHero
         label="Services"
         title="Our Services"
-        description="Strategy, creativity and technology — working together." />
-      
+        description="Strategy, creativity and technology — working together." 
+      />
 
-      <nav
-        aria-label="Services"
-        className="sticky top-[72px] z-30 border-y border-line bg-[rgba(4,28,38,0.88)] backdrop-blur-xl lg:top-20">
-        
-        <Container>
-          <ul className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5 py-3 sm:mx-0 sm:px-0">
-            {services.map((s) =>
-            <li key={s.slug} className="shrink-0">
-                <a
-                href={`#${s.slug}`}
-                onClick={(e) => jumpTo(e, s.slug)}
-                className="flex min-h-[44px] items-center gap-2 rounded-full border border-line px-4 text-sm text-fg-2 transition-colors duration-200 hover:border-line-accent hover:text-white">
-                
-                  <span className="font-display text-xs tabular-nums text-cyan">{s.number}</span>
-                  {s.title}
-                </a>
-              </li>
-            )}
-          </ul>
-        </Container>
-      </nav>
+      <ServicesNav services={services} />
 
-      {services.map((service, i) =>
-      <ServiceDetail key={service.slug} service={service} index={i} />
+      {services.map((service, i) => (
+        <ServiceDetail key={service._id || service.slug} service={service} index={i} total={services.length} />
+      ))}
+
+      {services.length === 0 && (
+        <div className="py-32 text-center">
+          <p className="text-xl text-fg-3">No services found.</p>
+        </div>
       )}
 
       <FinalCta
@@ -75,8 +40,8 @@ export default function Services() {
         description="Tell us where you want to go. We'll come back with a clear plan and a quote."
         primaryLabel="Get a Quote"
         secondaryLabel="See Our Work"
-        secondaryTo="/work" />
-      
-    </>);
-
+        secondaryTo="/work" 
+      />
+    </>
+  );
 }

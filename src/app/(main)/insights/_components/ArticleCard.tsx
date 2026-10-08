@@ -2,18 +2,22 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { ArrowRightIcon } from 'lucide-react';
 import { formatDate } from '@/utils/date';
-import type { Article } from '@/types/content';
+import type { IArticle } from '@/types/api';
 
 interface ArticleCardProps {
-  article: Article;
+  article: IArticle;
   tone?: 'dark' | 'light';
 }
 
 export function ArticleCard({ article, tone = 'dark' }: ArticleCardProps) {
   const light = tone === 'light';
+
+  // Fallback date
+  const articleDate = article.publishedAt || article.createdAt;
 
   return (
     <article className="group h-full">
@@ -21,19 +25,18 @@ export function ArticleCard({ article, tone = 'dark' }: ArticleCardProps) {
         className="flex h-full flex-col rounded-2xl transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1.5">
         
         <div className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-navy-700">
-          <img
-            src={article.image}
-            alt={article.imageAlt}
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.04]" />
-          
+          <Image
+            src={article.image || '/placeholder-image.jpg'}
+            alt={article.imageAlt || article.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.04]" />
         </div>
         <div className="mt-5 flex items-center gap-3 text-sm">
           <span className={`font-medium ${light ? 'text-ink-teal' : 'text-cyan'}`}>{article.category}</span>
           <span aria-hidden className={`h-1 w-1 rounded-full ${light ? 'bg-ink/30' : 'bg-white/30'}`} />
-          <time dateTime={article.date} className={light ? 'text-ink-2' : 'text-fg-3'}>
-            {formatDate(article.date)}
+          <time dateTime={articleDate} className={light ? 'text-ink-2' : 'text-fg-3'}>
+            {formatDate(articleDate)}
           </time>
         </div>
         <h3
@@ -59,5 +62,4 @@ export function ArticleCard({ article, tone = 'dark' }: ArticleCardProps) {
         </span>
       </Link>
     </article>);
-
 }

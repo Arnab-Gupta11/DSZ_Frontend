@@ -2,14 +2,15 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUpRightIcon, Compass } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 import { useParallax } from "@/hooks/useParallax";
-import type { Service } from "@/types/content";
+import type { IService } from "@/types/api";
 
 interface ServiceCardProps {
-  service: Service;
+  service: IService;
   index: number;
   parallax: number;
 }
@@ -27,14 +28,16 @@ export function ServiceCard({ service, index, parallax }: ServiceCardProps) {
       <Reveal delay={(index % 3) * 0.08} className="h-full">
         <Link
           href={`/services#${service.slug}`}
-          className="group relative flex h-full min-h-[340px] flex-col overflow-hidden rounded-2xl bg-navy-800 transition-transform duration-300 hover:-translate-y-2"
+          className="group relative flex h-full min-h-85 flex-col overflow-hidden rounded-2xl bg-navy-800 transition-transform duration-300 hover:-translate-y-2"
         >
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
-            <img
-              src={service.image}
-              alt={service.title}
-              className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-110"
+            <Image
+              src={service.image || "/placeholder-image.jpg"}
+              alt={service.imageAlt || service.title}
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-110"
             />
           </div>
 
@@ -63,7 +66,7 @@ export function ServiceCard({ service, index, parallax }: ServiceCardProps) {
                 <div className="flex items-center gap-2 text-white">
                   <Compass className="h-5 w-5 text-cyan" />
                   <span className="font-display text-sm font-medium lowercase tracking-wide">
-                    {service.category}
+                    {service.tag || service.slug}
                   </span>
                 </div>
 
