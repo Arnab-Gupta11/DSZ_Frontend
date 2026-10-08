@@ -34,6 +34,7 @@ type FormValues = z.infer<typeof formSchema>;
 export function ContactForm() {
   const params = useSearchParams();
   const [status, setStatus] = useState<Status>('idle');
+  const [dynamicServices, setDynamicServices] = useState<any[]>([]);
 
   const {
     control,
@@ -47,23 +48,48 @@ export function ContactForm() {
   });
 
   useEffect(() => {
+    import('@/lib/api/client').then(({ api }) => {
+      api.getServices().then((res: any) => {
+        if (res.data) setDynamicServices(res.data);
+      }).catch(console.error);
+    });
+  }, []);
+
+  const currentNeedOptions = dynamicServices.length > 0 
+    ? [...dynamicServices.map((s) => s.title), CALL_OPTION, 'Not sure yet']
+    : needOptions;
+
+  useEffect(() => {
     const serviceSlug = params?.get('service');
     const topic = params?.get('topic');
-    const match = services.find((s) => s.slug === serviceSlug);
+    
+    // Check dynamic services first, fallback to static
+    const sourceServices = dynamicServices.length > 0 ? dynamicServices : services;
+    const match = sourceServices.find((s) => s.slug === serviceSlug);
+    
     if (match) setValue('need', match.title);
     else if (topic === 'call') setValue('need', CALL_OPTION);
-  }, [params, setValue]);
+  }, [params, setValue, dynamicServices]);
 
   const onSubmit = async (values: FormValues) => {
     setStatus('submitting');
     try {
-      // Mock API call
-      await new Promise((resolve) => window.setTimeout(resolve, 1200));
+      const { api } = await import('@/lib/api/client');
+      
+      let serviceId = undefined;
+      const match = dynamicServices.find((s) => s.title === values.need);
+      if (match) {
+        serviceId = match._id || match.id;
+      }
+      
+      const payload = { ...values, serviceId };
+      const res = await api.submitContact(payload);
+      
       setStatus('success');
-      toast.success("Message sent successfully!");
-    } catch {
+      toast.success(res?.message || "Message sent successfully!");
+    } catch (error: any) {
       setStatus('idle');
-      toast.error("Something went wrong. Please try again.");
+      toast.error(error?.message || "Something went wrong. Please try again.");
     }
   };
 
@@ -135,7 +161,7 @@ export function ContactForm() {
                 <CustomSelect
                   value={field.value}
                   onChange={field.onChange}
-                  options={needOptions}
+                  options={currentNeedOptions}
                   hasError={!!errors.need}
                 />
               </Field>

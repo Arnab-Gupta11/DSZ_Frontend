@@ -56,6 +56,13 @@ export const api = {
     });
   },
 
+  submitContact: (data: any) => {
+    return fetchApi<any>(`/contact`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+
   getJobs: (params?: { department?: string; page?: number; limit?: number }) => {
     const searchParams = new URLSearchParams();
     if (params?.department) searchParams.append('department', params.department);
