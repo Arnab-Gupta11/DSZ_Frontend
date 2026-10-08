@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useTransition } from "react";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import React from "react";
+import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { ProjectCard } from "./ProjectCard";
-import { Button } from "@/components/ui/Button";
+
 import { easeOut } from "@/utils/motion";
 import type { IWork, IService, ApiResponse } from "@/types/api";
 
@@ -29,12 +29,38 @@ export function WorkListClient({
   const [works, setWorks] = React.useState<IWork[]>(initialWorks);
   const [currentMeta, setCurrentMeta] = React.useState(meta);
 
+  const scrollContainerRef = React.useRef<HTMLUListElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = React.useState(false);
+  const [canScrollRight, setCanScrollRight] = React.useState(false);
+
+  const checkScroll = React.useCallback(() => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } =
+        scrollContainerRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(Math.ceil(scrollLeft + clientWidth) < scrollWidth);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    checkScroll();
+    window.addEventListener("resize", checkScroll);
+    return () => window.removeEventListener("resize", checkScroll);
+  }, [checkScroll, services]);
+
   // Sync with server initial data when it changes
   React.useEffect(() => {
     setWorks(initialWorks);
     setCurrentMeta(meta);
     setActive(currentService || "All");
   }, [initialWorks, meta, currentService]);
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const amount = direction === "left" ? -300 : 300;
+      scrollContainerRef.current.scrollBy({ left: amount, behavior: "smooth" });
+    }
+  };
 
   const fetchWorks = async (serviceId: string, page: number) => {
     setIsFetching(true);
@@ -84,12 +110,32 @@ export function WorkListClient({
   return (
     <Container>
       <div className="flex flex-col gap-4 border-b border-line pb-6 lg:flex-row lg:items-center lg:justify-between">
-        <div className="relative flex-1 w-full overflow-hidden">
-          {/* Fading edges for scroll indication on desktop */}
-          <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-8 bg-linear-to-l from-background to-transparent lg:w-12"></div>
+        <div className="flex flex-1 items-center w-full min-w-0 overflow-hidden">
+          {/* Left Arrow */}
+          <button
+            type="button"
+            onClick={() => scroll("left")}
+            className={`hidden shrink-0 mr-3 h-9 w-9 items-center justify-center rounded-full bg-navy border border-line text-cyan transition-colors hover:bg-cyan hover:text-navy lg:flex ${canScrollLeft ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+            aria-label="Scroll left"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
 
           <ul
-            className={`no-scrollbar flex gap-2 overflow-x-auto pr-12 ${isFetching ? "opacity-50" : "transition-opacity duration-300"}`}
+            ref={scrollContainerRef}
+            onScroll={checkScroll}
+            className={`no-scrollbar flex flex-1 gap-2 overflow-x-auto ${isFetching ? "opacity-50" : "transition-opacity duration-300"}`}
             aria-label="Filter projects"
           >
             <li className="shrink-0">
@@ -142,6 +188,27 @@ export function WorkListClient({
               );
             })}
           </ul>
+
+          {/* Right Arrow */}
+          <button
+            type="button"
+            onClick={() => scroll("right")}
+            className={`hidden shrink-0 ml-3 h-9 w-9 items-center justify-center rounded-full bg-navy border border-line text-cyan transition-colors hover:bg-cyan hover:text-navy lg:flex ${canScrollRight ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+            aria-label="Scroll right"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
         </div>
         <p
           className="shrink-0 text-sm font-medium text-fg-3 lg:pl-4"
