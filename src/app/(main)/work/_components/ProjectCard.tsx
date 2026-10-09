@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { ArrowRightIcon } from "lucide-react";
 import { useCursorLabel } from "@/contexts/CursorContext";
 import { easeOut } from "@/utils/motion";
@@ -30,12 +30,21 @@ export function ProjectCard({
   reveal = true,
 }: ProjectCardProps) {
   const cursor = useCursorLabel("View Case Study →");
+  const cardRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "end start"],
+  });
+
+  const imageY = useTransform(scrollYProgress, [0, 1], reduceMotion ? ["0%", "0%"] : ["-12%", "12%"]);
 
   const imageUrl = project.heroImages?.[0]?.src || "/placeholder-image.jpg";
   const imageAlt = project.heroImages?.[0]?.alt || project.title;
 
   return (
-    <article className={`group ${className}`}>
+    <article ref={cardRef} className={`group ${className}`}>
       <Link
         href={`/work/${project.slug}`}
         {...cursor}
@@ -55,13 +64,16 @@ export function ProjectCard({
           transition={{ duration: 0.8, ease: easeOut }}
           className={`relative overflow-hidden rounded-[20px] bg-navy-700 ${aspects[size]}`}
         >
-          <Image
-            src={imageUrl}
-            alt={imageAlt}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.04]"
-          />
+          {/* Inner Image Wrapper for Window Parallax */}
+          <motion.div style={{ y: imageY }} className="absolute inset-[-15%]">
+            <Image
+              src={imageUrl}
+              alt={imageAlt}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.04]"
+            />
+          </motion.div>
 
           <div className="absolute inset-0 bg-navy/0 transition-colors duration-300 group-hover:bg-navy/40" />
           <div className="absolute left-4 top-4 flex flex-wrap gap-2">
