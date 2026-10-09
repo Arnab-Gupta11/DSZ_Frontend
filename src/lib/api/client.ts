@@ -95,13 +95,19 @@ export const api = {
       next: { tags: [`work:${slug}`], revalidate: 60 },
     }),
 
-  getArticles: () => 
-    fetchApi<IArticle[]>('/articles', {
-      next: { tags: ['articles'], revalidate: 60 },
-    }),
+  getArticles: (params?: { category?: string; page?: number; limit?: number }) => {
+    const searchParams = new URLSearchParams();
+    if (params?.category) searchParams.append('category', params.category);
+    if (params?.page) searchParams.append('page', params.page.toString());
+    if (params?.limit) searchParams.append('limit', params.limit.toString());
+    const query = searchParams.toString();
+    return fetchApi<IArticle[]>(`/articles${query ? `?${query}` : ''}`, {
+      cache: 'no-store', // Force fresh data for filtered lists
+    });
+  },
     
   getArticleBySlug: (slug: string) => 
-    fetchApi<IArticle>(`/articles/${slug}`, {
+    fetchApi<{ article: IArticle; related: IArticle[] }>(`/articles/${slug}`, {
       next: { tags: [`article:${slug}`], revalidate: 60 },
     }),
 

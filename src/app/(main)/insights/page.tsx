@@ -8,9 +8,29 @@ export const metadata = {
   description: 'Marketing tips, AI tools, case studies and news from the Digital Soft Zone team.',
 };
 
-export default async function InsightsPage() {
-  const response = await api.getArticles();
-  const initialArticles = response.data || [];
+interface PageProps {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export default async function InsightsPage({ searchParams }: PageProps) {
+  const resolvedParams = await searchParams;
+  const category =
+    typeof resolvedParams.category === "string"
+      ? resolvedParams.category
+      : undefined;
+  const pageParam =
+    typeof resolvedParams.page === "string"
+      ? parseInt(resolvedParams.page, 10)
+      : 1;
+
+  const [articlesRes, servicesRes] = await Promise.all([
+    api.getArticles({ limit: 6, page: pageParam, category }),
+    api.getServices(),
+  ]);
+  
+  const initialArticles = articlesRes.data || [];
+  const initialMeta = articlesRes.meta || { page: pageParam, limit: 6, total: 0, totalPages: 1 };
+  const services = servicesRes.data || [];
 
   return (
     <>
@@ -21,7 +41,12 @@ export default async function InsightsPage() {
       />
 
       <section aria-label="Articles" className="bg-paper py-16 text-ink lg:py-24">
-        <InsightListClient initialArticles={initialArticles} />
+        <InsightListClient 
+          initialArticles={initialArticles} 
+          initialMeta={initialMeta}
+          services={services} 
+          currentCategory={category}
+        />
       </section>
     </>
   );

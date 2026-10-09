@@ -38,10 +38,12 @@ export function InsightDetailClient({ article, related }: InsightDetailClientPro
               transition={{ duration: 0.6, ease: easeOut }}>
               
               <p className="mt-8 flex flex-wrap items-center gap-3 text-sm">
-                <span className="font-medium text-cyan">{article.category}</span>
+                <span className="font-medium text-cyan">
+                  {typeof article.category === 'object' ? article.category?.title : article.category}
+                </span>
                 <span aria-hidden className="h-1 w-1 rounded-full bg-white/30" />
                 <time dateTime={articleDate} className="text-fg-2">
-                  {formatDate(articleDate)}
+                  {articleDate ? formatDate(articleDate) : 'Unknown date'}
                 </time>
                 <span aria-hidden className="h-1 w-1 rounded-full bg-white/30" />
                 <span className="text-fg-2">{article.readTime}</span>
@@ -101,7 +103,7 @@ export function InsightDetailClient({ article, related }: InsightDetailClientPro
                     
                 case 'html':
                   return (
-                    <div key={i} className="mt-6 prose prose-lg prose-p:text-ink/85 prose-headings:text-ink prose-a:text-ink-teal max-w-none" dangerouslySetInnerHTML={{ __html: block.text }} />
+                    <div key={i} className="mt-6 tiptap-content" dangerouslySetInnerHTML={{ __html: block.text }} />
                   );
 
                 default:

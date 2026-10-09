@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const p = await params;
   try {
     const response = await api.getArticleBySlug(p.slug);
-    const article = response.data;
+    const article = response.data?.article;
     if (!article) return {};
 
     return {
@@ -30,27 +30,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function InsightDetailPage({ params }: PageProps) {
   const p = await params;
-  let article;
-  let allArticles = [];
 
   try {
     const response = await api.getArticleBySlug(p.slug);
-    article = response.data;
-    
-    // We fetch all articles to determine related articles
-    const articlesResponse = await api.getArticles();
-    allArticles = articlesResponse.data || [];
+    const article = response.data?.article;
+    const related = response.data?.related || [];
+
+    if (!article) {
+      notFound();
+    }
+
+    return <InsightDetailClient article={article} related={related} />;
   } catch (error) {
     notFound();
   }
-
-  if (!article) {
-    notFound();
-  }
-
-  const sameCategory = allArticles.filter((a) => a.slug !== article.slug && a.category === article.category);
-  const others = allArticles.filter((a) => a.slug !== article.slug && a.category !== article.category);
-  const related = [...sameCategory, ...others].slice(0, 3);
-
-  return <InsightDetailClient article={article} related={related} />;
 }

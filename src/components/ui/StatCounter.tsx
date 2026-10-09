@@ -7,7 +7,7 @@ import type { Stat } from '../../types/content';
 
 export function StatCounter({ value, suffix, label }: Stat) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
+  const inView = useInView(ref, { once: true, margin: '0px 0px -50px 0px' });
   const reduce = useReducedMotion();
   const [display, setDisplay] = useState(0);
 

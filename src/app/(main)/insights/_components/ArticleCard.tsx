@@ -33,10 +33,12 @@ export function ArticleCard({ article, tone = 'dark' }: ArticleCardProps) {
             className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.04]" />
         </div>
         <div className="mt-5 flex items-center gap-3 text-sm">
-          <span className={`font-medium ${light ? 'text-ink-teal' : 'text-cyan'}`}>{article.category}</span>
+          <span className={`font-medium ${light ? 'text-ink-teal' : 'text-cyan'}`}>
+            {typeof article.category === 'object' ? article.category?.title : article.category}
+          </span>
           <span aria-hidden className={`h-1 w-1 rounded-full ${light ? 'bg-ink/30' : 'bg-white/30'}`} />
           <time dateTime={articleDate} className={light ? 'text-ink-2' : 'text-fg-3'}>
-            {formatDate(articleDate)}
+            {articleDate ? formatDate(articleDate) : 'Unknown date'}
           </time>
         </div>
         <h3

@@ -64,7 +64,7 @@ export interface IArticle {
   _id: string;
   slug: string;
   title: string;
-  category: 'Marketing Tips' | 'AI Tools' | 'Case Studies' | 'DSZ News';
+  category: { _id: string; title: string; slug: string } | string;
   excerpt: string;
   image: string;
   imageAlt: string;
