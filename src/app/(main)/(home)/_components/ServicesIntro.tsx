@@ -7,7 +7,7 @@ import { api } from "@/lib/api/client";
 const parallaxOffsets = [0, 10, 5, 15, 8, 12];
 
 export async function ServicesIntro() {
-  const response = await api.getServices();
+  const response = await api.getServices({ isFeatured: true });
   const services = response.data || [];
 
   return (
@@ -27,16 +27,27 @@ export async function ServicesIntro() {
             }
           />
         </div>
-        <div className="mt-16 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, i) => (
-            <ServiceCard
-              key={service._id || service.slug}
-              service={service}
-              index={i}
-              parallax={parallaxOffsets[i % parallaxOffsets.length]}
-            />
-          ))}
-        </div>
+
+        {services.length > 0 ? (
+          <div className="mt-16 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {services.map((service, i) => (
+              <ServiceCard
+                key={service._id || service.slug}
+                service={service}
+                index={i}
+                parallax={parallaxOffsets[i % parallaxOffsets.length]}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="mt-16 flex flex-col items-center justify-center rounded-[32px] bg-navy-700 px-6 py-20 text-center sm:px-12 border border-line-accent">
+            <h3 className="font-display text-2xl font-bold text-white mb-3">Services Update in Progress</h3>
+            <p className="text-fg-2 max-w-md mx-auto mb-8">We are updating our service offerings to serve you better. Please explore all services on our dedicated page.</p>
+            <Button to="/services" variant="primary">
+              View All Services
+            </Button>
+          </div>
+        )}
       </Container>
     </section>
   );

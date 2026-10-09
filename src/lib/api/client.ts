@@ -79,11 +79,12 @@ export const api = {
       next: { tags: [`job:${slug}`], revalidate: 60 },
     }),
 
-  getWorks: (params?: { service?: string; page?: number; limit?: number }) => {
+  getWorks: (params?: { service?: string; page?: number; limit?: number; isFeatured?: boolean }) => {
     const searchParams = new URLSearchParams();
     if (params?.service) searchParams.append('service', params.service);
     if (params?.page) searchParams.append('page', params.page.toString());
     if (params?.limit) searchParams.append('limit', params.limit.toString());
+    if (params?.isFeatured !== undefined) searchParams.append('isFeatured', params.isFeatured.toString());
     const query = searchParams.toString();
     return fetchApi<IWork[]>(`/works${query ? `?${query}` : ''}`, {
       cache: 'no-store', // Force fresh data for filtered lists
@@ -95,11 +96,12 @@ export const api = {
       next: { tags: [`work:${slug}`], revalidate: 60 },
     }),
 
-  getArticles: (params?: { category?: string; page?: number; limit?: number }) => {
+  getArticles: (params?: { category?: string; page?: number; limit?: number; isFeatured?: boolean }) => {
     const searchParams = new URLSearchParams();
     if (params?.category) searchParams.append('category', params.category);
     if (params?.page) searchParams.append('page', params.page.toString());
     if (params?.limit) searchParams.append('limit', params.limit.toString());
+    if (params?.isFeatured !== undefined) searchParams.append('isFeatured', params.isFeatured.toString());
     const query = searchParams.toString();
     return fetchApi<IArticle[]>(`/articles${query ? `?${query}` : ''}`, {
       cache: 'no-store', // Force fresh data for filtered lists
@@ -111,10 +113,14 @@ export const api = {
       next: { tags: [`article:${slug}`], revalidate: 60 },
     }),
 
-  getServices: () => 
-    fetchApi<IService[]>('/services', {
-      next: { tags: ['services'], revalidate: 60 },
-    }),
+  getServices: (params?: { isFeatured?: boolean }) => {
+    const searchParams = new URLSearchParams();
+    if (params?.isFeatured !== undefined) searchParams.append('isFeatured', params.isFeatured.toString());
+    const query = searchParams.toString();
+    return fetchApi<IService[]>(`/services${query ? `?${query}` : ''}`, {
+      cache: 'no-store',
+    });
+  },
     
   getServiceBySlug: (slug: string) => 
     fetchApi<IService>(`/services/${slug}`, {
