@@ -12,7 +12,7 @@ interface FormFieldProps {
 /** Underline-style form field with animated cyan focus line (dark backgrounds). */
 export function FormField({ id, label, error, required, hint, children }: FormFieldProps) {
   return (
-    <div>
+    <div className="w-full min-w-0">
       <label htmlFor={`field-${id}`} className="block text-sm font-medium text-fg-2">
         {label}
         {required && <span aria-hidden className="ml-0.5 text-cyan">*</span>}

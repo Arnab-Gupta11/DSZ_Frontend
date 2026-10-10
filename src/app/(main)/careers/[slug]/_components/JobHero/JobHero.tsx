@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { JobMetaChips } from '@/components/careers/JobMetaChips/JobMetaChips';
 import { formatDate } from '@/utils/date';
 import { easeOut } from '@/utils/motion';
-import type { Job } from '@/types/content';
+import type { IJob } from "@/types/api";
 
 const fade = (delay: number) => ({
   initial: { opacity: 0, y: 16 },
@@ -18,7 +18,7 @@ const fade = (delay: number) => ({
   transition: { duration: 0.6, ease: easeOut, delay }
 });
 
-export function JobHero({ job, closed }: {job: Job;closed: boolean;}) {
+export function JobHero({ job, closed }: {job: IJob;closed: boolean;}) {
   return (
     <section className="relative isolate overflow-hidden bg-navy pb-16 pt-32 lg:pb-24 lg:pt-44">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
@@ -45,7 +45,7 @@ export function JobHero({ job, closed }: {job: Job;closed: boolean;}) {
 
         <motion.p {...fade(0.05)} className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-cyan">
           <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-cyan" />
-          {job.department}
+          {job.openings} opening{job.openings > 1 ? 's' : ''}
         </motion.p>
 
         <AnimatedText
@@ -61,7 +61,7 @@ export function JobHero({ job, closed }: {job: Job;closed: boolean;}) {
         </motion.p>
 
         <motion.div {...fade(0.45)} className="mt-8 flex flex-wrap items-center gap-2">
-          <JobMetaChips job={job} tone="dark" showDepartment={false} showExperience />
+          <JobMetaChips job={job} tone="dark" showOpenings={false} showExperience />
           {job.salary &&
           <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-medium text-fg-2">
               <BanknoteIcon aria-hidden className="h-3.5 w-3.5" />

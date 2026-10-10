@@ -13,7 +13,7 @@ import {
   UsersIcon
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import type { Job, JobDepartment } from '../types/content';
+import type { Job } from '../types/content';
 
 /**
  * Open positions. Set this to an empty array (`[]`) to show the
@@ -23,7 +23,7 @@ export const jobs: Job[] = [
 {
   slug: 'senior-frontend-developer',
   title: 'Senior Frontend Developer',
-  department: 'Development',
+  openings: 1,
   type: 'Full-time',
   location: 'Hybrid',
   city: 'Chittagong',
@@ -64,7 +64,7 @@ export const jobs: Job[] = [
 {
   slug: 'ui-ux-designer',
   title: 'UI/UX Designer',
-  department: 'Design',
+  openings: 1,
   type: 'Full-time',
   location: 'On-site',
   city: 'Chittagong',
@@ -103,7 +103,7 @@ export const jobs: Job[] = [
 {
   slug: 'digital-marketing-executive',
   title: 'Digital Marketing Executive',
-  department: 'Marketing',
+  openings: 1,
   type: 'Full-time',
   location: 'On-site',
   city: 'Chittagong',
@@ -131,7 +131,7 @@ export const jobs: Job[] = [
 {
   slug: 'video-editor-motion-designer',
   title: 'Video Editor & Motion Designer',
-  department: 'Video',
+  openings: 1,
   type: 'Full-time',
   location: 'On-site',
   city: 'Chittagong',
@@ -159,7 +159,7 @@ export const jobs: Job[] = [
 {
   slug: 'project-coordinator-intern',
   title: 'Project Coordinator (Intern)',
-  department: 'Operations',
+  openings: 1,
   type: 'Internship',
   location: 'On-site',
   city: 'Chittagong',
@@ -186,7 +186,6 @@ export const jobs: Job[] = [
 }];
 
 
-export const jobDepartments: JobDepartment[] = ['Development', 'Design', 'Marketing', 'Video', 'Operations'];
 
 export interface CareerValue {
   icon: LucideIcon;

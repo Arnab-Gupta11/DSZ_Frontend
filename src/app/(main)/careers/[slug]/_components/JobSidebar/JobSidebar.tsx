@@ -7,13 +7,13 @@ import { Button } from '@/components/ui/Button';
 import { ShareButtons } from '@/app/(main)/insights/_components/ShareButtons';
 import { formatDate } from '@/utils/date';
 import { easeOut } from '@/utils/motion';
-import type { Job } from '@/types/content';
+import type { IJob } from "@/types/api";
 
-export function JobSidebar({ job, closed }: {job: Job;closed: boolean;}) {
+export function JobSidebar({ job, closed }: {job: IJob;closed: boolean;}) {
   const daysLeft = differenceInCalendarDays(parseISO(job.deadline), new Date());
 
   const rows = [
-  { label: 'Department', value: job.department },
+  { label: 'Openings', value: job.openings },
   { label: 'Location', value: `${job.location} · ${job.city}` },
   { label: 'Employment', value: job.type },
   { label: 'Experience', value: job.experience },

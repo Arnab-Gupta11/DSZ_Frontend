@@ -5,9 +5,9 @@ import { motion } from 'framer-motion';
 import { JobSection } from './_components/JobSection/JobSection';
 import { HiringProcess } from './_components/HiringProcess/HiringProcess';
 import { easeOut } from '@/utils/motion';
-import type { Job } from '@/types/content';
+import type { IJob } from "@/types/api";
 
-export function JobContent({ job }: {job: Job;}) {
+export function JobContent({ job }: {job: IJob;}) {
   return (
     <div className="space-y-12">
       <motion.section
