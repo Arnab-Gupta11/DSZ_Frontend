@@ -8,14 +8,10 @@ import { LinkedInIcon } from '@/components/ui/BrandIcons';
 import { socialLinks } from '@/constants/site';
 import { easeOut } from '@/utils/motion';
 
-interface EmptyStateProps {
-  /** true when there are no jobs at all; false when only the current filter is empty */
-  global?: boolean;
-  onReset?: () => void;
-}
+interface EmptyStateProps {}
 
 /** Animated placeholder shown when there are no open roles. */
-export function EmptyState({ global = true, onReset }: EmptyStateProps) {
+export function EmptyState({}: EmptyStateProps = {}) {
   const reduce = useReducedMotion();
   const linkedin = socialLinks.find((s) => s.key === 'linkedin')?.href ?? '#';
 
@@ -58,19 +54,16 @@ export function EmptyState({ global = true, onReset }: EmptyStateProps) {
 
       <div className="relative">
         <h3 className="mt-10 font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-bold leading-tight tracking-[-0.03em] text-white">
-          {global ? 'No open roles right now.' : 'Nothing in this team — yet.'}
+          No open roles right now.
         </h3>
         <p className="mx-auto mt-4 max-w-lg text-lg leading-relaxed text-fg-2">
-          {global ?
-          'We’re not actively hiring at the moment, but we’re always happy to meet talented people. Send us your CV and we’ll reach out when the right role opens up.' :
-          'There are no openings in this department right now. Check the other teams or send us a general application.'}
+          We’re not actively hiring at the moment, but we’re always happy to meet talented people. Send us your CV and we’ll reach out when the right role opens up.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
           <Button to="/contact?topic=careers" size="lg">
             Send your CV
           </Button>
-          {global ?
           <Button
             href={linkedin}
             external
@@ -78,14 +71,8 @@ export function EmptyState({ global = true, onReset }: EmptyStateProps) {
             variant="secondary"
             arrow={false}
             icon={<LinkedInIcon className="h-4 w-4" />}>
-            
               Follow on LinkedIn
-            </Button> :
-
-          <Button onClick={onReset} size="lg" variant="secondary" arrow={false}>
-              View all openings
             </Button>
-          }
         </div>
       </div>
     </motion.div>);

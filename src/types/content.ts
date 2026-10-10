@@ -121,14 +121,13 @@ export interface SocialLink {
   label: string;
   href: string;
 }
-export type JobDepartment = 'Development' | 'Design' | 'Marketing' | 'Video' | 'Operations';
 export type JobType = 'Full-time' | 'Part-time' | 'Internship' | 'Contract';
 export type JobLocation = 'On-site' | 'Remote' | 'Hybrid';
 
 export interface Job {
   slug: string;
   title: string;
-  department: JobDepartment;
+  openings: number;
   type: JobType;
   location: JobLocation;
   city: string;

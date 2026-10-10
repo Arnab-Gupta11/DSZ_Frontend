@@ -1,19 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { JobRow } from "@/components/careers/JobRow/JobRow";
-import {
-  JobFilters,
-  type FilterOption,
-} from "./_components/JobFilters/JobFilters";
 import { EmptyState } from "./_components/EmptyState/EmptyState";
-import { jobDepartments } from "@/constants/jobs";
 import { easeOut } from "@/utils/motion";
 import type { IJob } from "@/types/api";
-
-const ALL = "View all";
 
 interface JobOpeningsProps {
   jobs: IJob[];
@@ -21,20 +13,7 @@ interface JobOpeningsProps {
 }
 
 export function JobOpenings({ jobs, isLoading = false }: JobOpeningsProps) {
-  const [active, setActive] = useState(ALL);
-
-  const options = useMemo<FilterOption[]>(() => {
-    const depts = jobDepartments
-      .map((d) => ({
-        label: d,
-        count: jobs.filter((j) => j.department === d).length,
-      }))
-      .filter((d) => d.count > 0);
-    return [{ label: ALL, count: jobs.length }, ...depts];
-  }, [jobs]);
-
-  const visible =
-    active === ALL ? jobs : jobs.filter((j) => j.department === active);
+  const visible = jobs;
 
   return (
     <section
@@ -70,7 +49,6 @@ export function JobOpenings({ jobs, isLoading = false }: JobOpeningsProps) {
                 {visible.length}
               </span>{" "}
               {visible.length === 1 ? "opening" : "openings"}
-              {active !== ALL && <> in {active}</>}
             </p>
           )}
         </div>
@@ -90,10 +68,6 @@ export function JobOpenings({ jobs, isLoading = false }: JobOpeningsProps) {
           </div>
         ) : (
           <>
-            {/* <div className="mt-10">
-              <JobFilters options={options} active={active} onChange={setActive} />
-            </div> */}
-
             <div className="mt-12 lg:pl-6">
               <AnimatePresence mode="popLayout" initial={false}>
                 {visible.length > 0 ? (
@@ -107,8 +81,6 @@ export function JobOpenings({ jobs, isLoading = false }: JobOpeningsProps) {
                 ) : (
                   <EmptyState
                     key="empty"
-                    global={false}
-                    onReset={() => setActive(ALL)}
                   />
                 )}
               </AnimatePresence>

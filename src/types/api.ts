@@ -111,7 +111,6 @@ export interface IService {
 }
 
 
-export type TJobDepartment = 'Development' | 'Design' | 'Marketing' | 'Video' | 'Operations';
 export type TJobType = 'Full-time' | 'Part-time' | 'Internship' | 'Contract';
 export type TJobLocation = 'On-site' | 'Remote' | 'Hybrid';
 export type TJobStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
@@ -120,7 +119,7 @@ export interface IJob {
   _id: string;
   slug: string;
   title: string;
-  department: TJobDepartment;
+  openings: number;
   type: TJobType;
   location: TJobLocation;
   city: string;

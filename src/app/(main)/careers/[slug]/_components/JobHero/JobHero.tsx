@@ -45,7 +45,7 @@ export function JobHero({ job, closed }: {job: IJob;closed: boolean;}) {
 
         <motion.p {...fade(0.05)} className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-cyan">
           <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-cyan" />
-          {job.department}
+          {job.openings} opening{job.openings > 1 ? 's' : ''}
         </motion.p>
 
         <AnimatedText
@@ -61,7 +61,7 @@ export function JobHero({ job, closed }: {job: IJob;closed: boolean;}) {
         </motion.p>
 
         <motion.div {...fade(0.45)} className="mt-8 flex flex-wrap items-center gap-2">
-          <JobMetaChips job={job} tone="dark" showDepartment={false} showExperience />
+          <JobMetaChips job={job} tone="dark" showOpenings={false} showExperience />
           {job.salary &&
           <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-medium text-fg-2">
               <BanknoteIcon aria-hidden className="h-3.5 w-3.5" />

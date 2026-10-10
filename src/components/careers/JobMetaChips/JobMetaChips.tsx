@@ -5,7 +5,7 @@ import type { IJob } from "@/types/api";
 interface JobMetaChipsProps {
   job: IJob;
   tone?: 'light' | 'dark';
-  showDepartment?: boolean;
+  showOpenings?: boolean;
   showExperience?: boolean;
   className?: string;
 }
@@ -14,7 +14,7 @@ interface JobMetaChipsProps {
 export function JobMetaChips({
   job,
   tone = 'light',
-  showDepartment = true,
+  showOpenings = true,
   showExperience = false,
   className = ''
 }: JobMetaChipsProps) {
@@ -26,7 +26,7 @@ export function JobMetaChips({
   const items = [
   { icon: MapPinIcon, label: `${job.location} · ${job.city}` },
   { icon: ClockIcon, label: job.type },
-  ...(showDepartment ? [{ icon: BriefcaseIcon, label: job.department }] : []),
+  ...(showOpenings ? [{ icon: BriefcaseIcon, label: `${job.openings} opening${job.openings > 1 ? 's' : ''}` }] : []),
   ...(showExperience ? [{ icon: GraduationCapIcon, label: job.experience }] : [])];
 
 

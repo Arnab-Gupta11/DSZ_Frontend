@@ -63,9 +63,8 @@ export const api = {
     });
   },
 
-  getJobs: (params?: { department?: string; page?: number; limit?: number }) => {
+  getJobs: (params?: { page?: number; limit?: number }) => {
     const searchParams = new URLSearchParams();
-    if (params?.department) searchParams.append('department', params.department);
     if (params?.page) searchParams.append('page', params.page.toString());
     if (params?.limit) searchParams.append('limit', params.limit.toString());
     const query = searchParams.toString();
