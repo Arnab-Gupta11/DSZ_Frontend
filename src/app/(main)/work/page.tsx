@@ -27,13 +27,14 @@ export default async function WorkPage({ searchParams }: PageProps) {
       ? parseInt(resolvedParams.page, 10)
       : 1;
 
-  // Fetch works based on query
-  const worksResponse = await api.getWorks({ service, page, limit: 10 });
+  // Fetch works and services in parallel
+  const [worksResponse, servicesResponse] = await Promise.all([
+    api.getWorks({ service, page, limit: 10 }),
+    api.getServices()
+  ]);
+
   const initialWorks = worksResponse.data || [];
   const meta = worksResponse.meta;
-
-  // Fetch all services for the filter tabs
-  const servicesResponse = await api.getServices();
   const services = servicesResponse.data || [];
 
   return (

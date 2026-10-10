@@ -73,8 +73,10 @@ export function WorkListClient({
       });
       setWorks(response.data || []);
       setCurrentMeta(response.meta);
-    } catch (e) {
+    } catch (e: any) {
       console.error("Failed to fetch works:", e);
+      setWorks([]);
+      import("sonner").then((mod) => mod.toast.error(e?.message || "Failed to load projects."));
     } finally {
       setIsFetching(false);
     }

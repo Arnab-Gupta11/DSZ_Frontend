@@ -71,8 +71,10 @@ export function InsightListClient({ initialArticles, initialMeta, services, curr
       if (response.meta) {
         setMeta(response.meta);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load articles:', error);
+      if (pageNum === 1) setArticles([]);
+      import("sonner").then((mod) => mod.toast.error(error?.message || "Failed to load insights."));
     } finally {
       setLoading(false);
     }

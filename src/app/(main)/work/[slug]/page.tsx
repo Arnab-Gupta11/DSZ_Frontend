@@ -37,11 +37,12 @@ export default async function WorkDetailPage({ params }: PageProps) {
   let allWorks = [];
 
   try {
-    const response = await api.getWorkBySlug(p.slug);
+    const [response, worksResponse] = await Promise.all([
+      api.getWorkBySlug(p.slug),
+      api.getWorks({ limit: 100 }) // Adjust limit to ensure next project can be found
+    ]);
+    
     project = response.data;
-
-    // We fetch all works to determine the next project
-    const worksResponse = await api.getWorks();
     allWorks = worksResponse.data || [];
   } catch (error) {
     notFound();

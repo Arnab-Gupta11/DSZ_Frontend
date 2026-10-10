@@ -70,7 +70,7 @@ export const api = {
     if (params?.limit) searchParams.append('limit', params.limit.toString());
     const query = searchParams.toString();
     return fetchApi<IJob[]>(`/jobs${query ? `?${query}` : ''}`, {
-      cache: 'no-store',
+      next: { revalidate: 60 },
     });
   },
 
@@ -87,7 +87,7 @@ export const api = {
     if (params?.isFeatured !== undefined) searchParams.append('isFeatured', params.isFeatured.toString());
     const query = searchParams.toString();
     return fetchApi<IWork[]>(`/works${query ? `?${query}` : ''}`, {
-      cache: 'no-store', // Force fresh data for filtered lists
+      next: { revalidate: 60 },
     });
   },
     
@@ -104,7 +104,7 @@ export const api = {
     if (params?.isFeatured !== undefined) searchParams.append('isFeatured', params.isFeatured.toString());
     const query = searchParams.toString();
     return fetchApi<IArticle[]>(`/articles${query ? `?${query}` : ''}`, {
-      cache: 'no-store', // Force fresh data for filtered lists
+      next: { revalidate: 60 },
     });
   },
     
@@ -118,7 +118,7 @@ export const api = {
     if (params?.isFeatured !== undefined) searchParams.append('isFeatured', params.isFeatured.toString());
     const query = searchParams.toString();
     return fetchApi<IService[]>(`/services${query ? `?${query}` : ''}`, {
-      cache: 'no-store',
+      next: { revalidate: 60 },
     });
   },
     

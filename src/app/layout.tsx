@@ -10,9 +10,37 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
+import { site } from '@/constants/site';
+
 export const metadata: Metadata = {
-  title: "Digital Soft Zone",
-  description: "Digital Agency in Chittagong, Bangladesh",
+  metadataBase: new URL(site.url),
+  title: {
+    default: site.name,
+    template: `%s | ${site.name}`,
+  },
+  description: site.tagline,
+  openGraph: {
+    title: site.name,
+    description: site.tagline,
+    url: site.url,
+    siteName: site.name,
+    images: [
+      {
+        url: site.ogImage || '/og-image.png', // A default fallback image path if ogImage is empty
+        width: 1200,
+        height: 630,
+        alt: site.name,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: site.name,
+    description: site.tagline,
+    images: [site.ogImage || '/og-image.png'],
+  },
 };
 
 export default function RootLayout({
