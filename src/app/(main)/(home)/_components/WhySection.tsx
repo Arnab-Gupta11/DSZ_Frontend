@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Container } from '@/components/ui/Container';
 import { SectionHeading } from '@/components/ui/SectionHeading';
@@ -33,18 +34,24 @@ export function WhySection() {
             <div className="sticky top-28">
               <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] border border-line bg-navy-700">
                 <AnimatePresence initial={false}>
-                  <motion.img
+                  <motion.div
                     key={current.image}
-                    src={current.image}
-                    alt={current.imageAlt}
                     initial={{ opacity: 0, scale: 1.04 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.5, ease: easeOut }}
-                    className="absolute inset-0 h-full w-full object-cover" />
-                  
+                    className="absolute inset-0 h-full w-full"
+                  >
+                    <Image
+                      src={current.image}
+                      alt={current.imageAlt}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover"
+                    />
+                  </motion.div>
                 </AnimatePresence>
-                <div className="absolute inset-x-5 bottom-5 flex items-end justify-between gap-4 rounded-2xl border border-line bg-[rgba(4,28,38,0.78)] p-5 backdrop-blur-md">
+                <div className="absolute inset-x-5 bottom-5 z-10 flex items-end justify-between gap-4 rounded-2xl border border-line bg-[rgba(4,28,38,0.78)] p-5 backdrop-blur-md">
                   <div>
                     <p className="font-display text-sm font-medium text-cyan">{current.number}</p>
                     <p className="mt-1 font-display text-xl font-bold text-white">{current.caption}</p>

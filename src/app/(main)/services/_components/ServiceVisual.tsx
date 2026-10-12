@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
 import { BellIcon, MessageSquareIcon, PlayIcon, ShoppingBagIcon, TableIcon } from 'lucide-react';
 import { images } from '@/constants/images';
@@ -92,8 +93,15 @@ function renderDesign() {
         className={`w-[30%] overflow-hidden rounded-2xl border border-line bg-navy shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8)] ${
         i === 1 ? '-translate-y-3 scale-105' : 'translate-y-3'}`
         }>
-        
-          <img src={src} alt="" loading="lazy" className="aspect-[9/16] w-full object-cover" />
+          <div className="relative aspect-[9/16] w-full">
+            <Image
+              src={src}
+              alt="Design service showcase preview"
+              fill
+              sizes="(max-width: 768px) 30vw, 160px"
+              className="object-cover"
+            />
+          </div>
         </div>
       )}
     </div>);
@@ -105,11 +113,17 @@ function renderVideo() {
   return (
     <div className="flex h-full flex-col gap-3">
       <div className="relative flex-1 overflow-hidden rounded-2xl">
-        <img src={images.videoShoot} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
-        <span className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-cyan text-navy">
+        <Image
+          src={images.videoShoot}
+          alt="Video production preview"
+          fill
+          sizes="(max-width: 768px) 100vw, 500px"
+          className="object-cover"
+        />
+        <span className="absolute left-1/2 top-1/2 z-10 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-cyan text-navy">
           <PlayIcon className="ml-0.5 h-5 w-5 fill-current" />
         </span>
-        <span className="absolute bottom-3 left-3 rounded bg-navy/80 px-2 py-1 text-[11px] tabular-nums text-white">
+        <span className="absolute bottom-3 left-3 z-10 rounded bg-navy/80 px-2 py-1 text-[11px] tabular-nums text-white">
           00:12 / 00:20
         </span>
       </div>
@@ -142,8 +156,14 @@ function renderWeb() {
         </span>
       </div>
       <div className="relative mx-5 mb-5 flex-1 overflow-hidden rounded-xl">
-        <img src={images.watch} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute bottom-4 left-4 space-y-2">
+        <Image
+          src={images.watch}
+          alt="Web development project preview"
+          fill
+          sizes="(max-width: 768px) 100vw, 500px"
+          className="object-cover"
+        />
+        <div className="absolute bottom-4 left-4 z-10 space-y-2">
           <span className="block h-3 w-32 rounded-full bg-white/80" />
           <span className="block h-3 w-20 rounded-full bg-white/40" />
           <span className="mt-3 block h-7 w-24 rounded-full bg-cyan" />

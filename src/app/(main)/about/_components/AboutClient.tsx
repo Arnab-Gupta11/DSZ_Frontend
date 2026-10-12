@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { MapPinIcon } from 'lucide-react';
 import { PageHero } from '@/components/ui/PageHero';
@@ -36,13 +37,19 @@ export function AboutClient() {
               whileInView={{ clipPath: 'inset(0% 0% 0% 0% round 28px)' }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.8, ease: easeOut }}
-              className="aspect-[4/3] overflow-hidden rounded-[28px] bg-navy-700">
+              className="relative aspect-[4/3] overflow-hidden rounded-[28px] bg-navy-700">
               
-              <motion.img
-                src={images.office}
-                alt="The Digital Soft Zone team working together in the studio"
+              <motion.div
                 style={{ y, scale: 1.12 }} suppressHydrationWarning
-                className="h-full w-full object-cover" />
+                className="relative h-full w-full">
+                <Image
+                  src={images.office}
+                  alt="The Digital Soft Zone team working together in the studio"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  className="object-cover"
+                />
+              </motion.div>
               
             </motion.div>
           </div>

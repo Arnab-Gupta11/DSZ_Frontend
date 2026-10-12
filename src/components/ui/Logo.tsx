@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { site } from '@/constants/site';
 
 interface LogoProps {
@@ -13,7 +14,16 @@ interface LogoProps {
  */
 export function Logo({ compact = false, className = '', markClassName = 'h-9 w-9' }: LogoProps) {
   if (site.logoSrc) {
-    return <img src={site.logoSrc} alt={site.name} className={`h-9 w-auto ${className}`} />;
+    return (
+      <Image
+        src={site.logoSrc}
+        alt={site.name}
+        width={140}
+        height={36}
+        className={`h-9 w-auto ${className}`}
+        priority
+      />
+    );
   }
 
   return (

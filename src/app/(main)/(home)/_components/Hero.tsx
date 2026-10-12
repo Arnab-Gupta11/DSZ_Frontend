@@ -80,15 +80,15 @@ export function Hero() {
               onMount
               delay={0.15}
               stagger={0.07}
-              text="Digital experiences built to move brands forward."
-              accent={['forward.']}
+              text="Your product has a story. We make people listen."
+              accent={['listen.']}
               className="mt-8 font-display text-[clamp(2.6rem,4.9vw,4.75rem)] font-bold leading-[1] tracking-[-0.045em] text-white" />
             
           </div>
 
           <motion.p {...fadeUp(0.55)} className="mt-7 max-w-xl text-lg leading-relaxed text-fg-2">
-            <span className="text-white">Brand strategy, digital marketing, design, video, web &amp; app development</span>{' '}
-            and <span className="text-white">business automation</span> — brought together under one digital agency.
+            <span className="text-white">Product videos, AI-powered content, and branding</span> for businesses ready to stand out from the feed. From the first frame of a promo video to the last detail of your brand, we help your product{' '}
+            <span className="text-white">get noticed, remembered, and chosen.</span>
           </motion.p>
 
           <div className="mt-10 flex flex-wrap items-center gap-3">

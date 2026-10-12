@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { MapPinIcon } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
@@ -25,12 +26,17 @@ export function AboutPreview() {
             transition={{ duration: 0.8, ease: easeOut }}
             className="relative aspect-[5/4] overflow-hidden rounded-[28px] bg-navy-700 lg:aspect-[4/5]">
             
-            <motion.img
-              src={images.office}
-              alt="The Digital Soft Zone team collaborating in the studio"
-              loading="lazy"
+            <motion.div
               style={{ y, scale: 1.12 }} suppressHydrationWarning
-              className="h-full w-full object-cover" />
+              className="relative h-full w-full">
+              <Image
+                src={images.office}
+                alt="The Digital Soft Zone team collaborating in the studio"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
+            </motion.div>
             
           </motion.div>
           <div className="absolute -bottom-6 right-4 flex items-center gap-3 rounded-2xl border border-line bg-[rgba(5,45,53,0.9)] p-4 backdrop-blur-md sm:right-8 sm:p-5">

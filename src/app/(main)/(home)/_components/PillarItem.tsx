@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { useInView } from 'framer-motion';
 import { CheckIcon } from 'lucide-react';
 import type { Pillar } from '@/types/content';
@@ -23,11 +24,15 @@ export function PillarItem({ pillar, index, active, onActivate }: PillarItemProp
   return (
     <li ref={ref} className="border-t border-line py-10 lg:flex lg:min-h-[56vh] lg:items-center lg:py-0">
       <div className="w-full">
-        <img
-          src={pillar.image}
-          alt={pillar.imageAlt}
-          loading="lazy"
-          className="mb-8 aspect-[4/3] w-full rounded-2xl object-cover lg:hidden" />
+        <div className="relative mb-8 aspect-[4/3] w-full overflow-hidden rounded-2xl lg:hidden">
+          <Image
+            src={pillar.image}
+            alt={pillar.imageAlt}
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
         
         <h3>
           <button
