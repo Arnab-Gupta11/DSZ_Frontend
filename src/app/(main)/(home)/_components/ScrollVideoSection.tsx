@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Volume2Icon, VolumeXIcon } from 'lucide-react';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
@@ -58,6 +58,27 @@ export function ScrollVideoSection() {
     }
   };
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
   if (shouldReduceMotion) {
     return (
       <section className="relative w-full bg-navy py-16 lg:py-24">
@@ -65,7 +86,7 @@ export function ScrollVideoSection() {
           <video
             ref={videoRef}
             src="/dsz.mp4"
-            autoPlay
+            preload="metadata"
             muted={muted}
             loop
             playsInline
@@ -109,7 +130,7 @@ export function ScrollVideoSection() {
           <video
             ref={videoRef}
             src="/dsz.mp4"
-            autoPlay
+            preload="metadata"
             muted={muted}
             loop
             playsInline

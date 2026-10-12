@@ -26,7 +26,7 @@ export function PreloaderProvider({ children }: { children: React.ReactNode }) {
     // Fallback in case something gets stuck
     const timer = setTimeout(() => {
       setIsReady(true);
-    }, 5000);
+    }, 3500);
     
     return () => clearTimeout(timer);
   }, []);
