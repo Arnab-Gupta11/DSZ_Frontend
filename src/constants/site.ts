@@ -14,9 +14,9 @@ export const site = {
   phone: "[PHONE NUMBER]",
   whatsappNumber: "[WHATSAPP NUMBER]",
   whatsappUrl: "https://wa.me/",
-  // addressLine: "[Office / floor], Software Technology Park",
-  // city: "Chittagong, Bangladesh",
-  logoSrc: "",
+  addressLine: "Software Technology Park",
+  city: "Chittagong, Bangladesh",
+  logoSrc: "/logo.png",
   ogImage: "",
 };
 

@@ -1,46 +1,53 @@
-import React from 'react';
-import Image from 'next/image';
-import { site } from '@/constants/site';
+import React from "react";
+import Image from "next/image";
+import { site } from "@/constants/site";
 
 interface LogoProps {
   compact?: boolean;
   className?: string;
   markClassName?: string;
+  priority?: boolean;
 }
 
 /**
- * Placeholder DSZ mark built from the brand palette.
- * Set `site.logoSrc` to render the official logo file instead.
+ * Official DSZ Logo using next/image with full responsive optimization.
+ * Dimensions: 440x171 (aspect ratio ~2.57:1)
  */
-export function Logo({ compact = false, className = '', markClassName = 'h-9 w-9' }: LogoProps) {
-  if (site.logoSrc) {
+export function Logo({
+  compact = false,
+  className = "",
+  markClassName = "",
+  priority = true,
+}: LogoProps) {
+  const logoSrc = site.logoSrc || "/logo.png";
+
+  if (compact) {
     return (
-      <Image
-        src={site.logoSrc}
-        alt={site.name}
-        width={140}
-        height={36}
-        className={`h-9 w-auto ${className}`}
-        priority
-      />
+      <span
+        className={`relative inline-flex items-center justify-start overflow-hidden rounded-lg aspect-square ${
+          markClassName || "h-8 w-8"
+        } ${className}`}
+      >
+        <Image
+          src={logoSrc}
+          alt={`${site.name} mark`}
+          width={440}
+          height={171}
+          priority={priority}
+          className="h-full w-auto max-w-none object-contain object-left pointer-events-none select-none"
+        />
+      </span>
     );
   }
 
   return (
-    <span className={`inline-flex items-center gap-2.5 ${className}`}>
-      <svg viewBox="0 0 40 40" className={markClassName} aria-hidden>
-        <rect x="0.5" y="0.5" width="39" height="39" rx="11" fill="#052D35" stroke="rgba(2,224,223,0.35)" />
-        <rect x="10" y="10" width="20" height="6.5" rx="3.25" fill="#02E0DF" />
-        <rect x="10" y="10" width="6.5" height="13" rx="3.25" fill="#02E0DF" />
-        <rect x="10" y="23.5" width="20" height="6.5" rx="3.25" fill="#05D8B5" />
-        <rect x="23.5" y="17" width="6.5" height="13" rx="3.25" fill="#05D8B5" />
-      </svg>
-      {!compact &&
-      <span className="flex flex-col leading-none">
-          <span className="font-display text-[15px] font-bold tracking-[-0.01em] text-white">Digital Soft Zone</span>
-          <span className="mt-1 text-[10px] font-medium uppercase tracking-[0.22em] text-fg-3">Digital Agency</span>
-        </span>
-      }
-    </span>);
-
+    <Image
+      src={logoSrc}
+      alt={site.name}
+      width={440}
+      height={200}
+      priority={priority}
+      className={`h-9 w-auto object-contain lg:h-16 pointer-events-none select-none ${className} ${markClassName}`}
+    />
+  );
 }
