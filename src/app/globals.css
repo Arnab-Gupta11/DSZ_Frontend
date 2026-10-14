@@ -223,10 +223,13 @@ input:focus-visible, textarea:focus-visible, select:focus-visible {
   mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%);
 }
 .no-scrollbar::-webkit-scrollbar {
-  display: none;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 .no-scrollbar {
-  scrollbar-width: none;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 /* Custom cursor (desktop, fine pointer only — toggled by JS) */
 .has-custom-cursor,

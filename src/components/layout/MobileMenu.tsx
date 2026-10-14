@@ -44,20 +44,20 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.25, ease: easeOut }}
-        className="fixed inset-0 z-40 flex flex-col bg-navy px-5 pb-8 pt-24 sm:px-8 lg:hidden">
+        className="fixed inset-0 z-40 flex flex-col overflow-hidden bg-navy px-5 pb-8 pt-24 sm:px-8 lg:hidden">
         
           <div aria-hidden className="grid-pattern mask-radial pointer-events-none absolute inset-0 opacity-40" />
-          <nav aria-label="Mobile" className="relative flex-1 overflow-y-auto">
+          <nav aria-label="Mobile" className="relative flex-1 overflow-y-auto overscroll-contain no-scrollbar">
             <ul className="flex flex-col">
               {navLinks.map((link, i) => {
                 const isActive = link.to === '/' ? pathname === '/' : pathname?.startsWith(link.to);
                 return (
                   <motion.li
                     key={link.to}
-                    initial={{ opacity: 0, y: 24 }}
+                    initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 8 }}
-                    transition={{ duration: 0.4, ease: easeOut, delay: 0.05 + i * 0.05 }}
+                    transition={{ duration: 0.35, ease: easeOut, delay: 0.04 + i * 0.04 }}
                     className="border-b border-line">
                     
                     <Link
@@ -76,11 +76,11 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
             </ul>
           </nav>
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: easeOut, delay: 0.38 }}
-            className="relative mt-6">
+            transition={{ duration: 0.35, ease: easeOut, delay: 0.3 }}
+            className="relative mt-6 shrink-0">
             
             <Button to="/contact" size="lg" className="w-full">
               Let&apos;s Work Together
