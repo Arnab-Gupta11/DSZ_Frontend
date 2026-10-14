@@ -19,7 +19,7 @@ export async function ServicesIntro() {
         <div id="services-title">
           <SectionHeading
             title="What We Do"
-            description="Strategy, creativity and technology in one team — so your brand, your marketing and your systems finally work together."
+            description="Everything your product needs to stand out, from video and content to design and branding—all telling one cohesive story."
             action={
               <Button to="/services" variant="secondary">
                 All Services
@@ -41,8 +41,13 @@ export async function ServicesIntro() {
           </div>
         ) : (
           <div className="mt-16 flex flex-col items-center justify-center rounded-[32px] bg-navy-700 px-6 py-20 text-center sm:px-12 border border-line-accent">
-            <h3 className="font-display text-2xl font-bold text-white mb-3">Services Update in Progress</h3>
-            <p className="text-fg-2 max-w-md mx-auto mb-8">We are updating our service offerings to serve you better. Please explore all services on our dedicated page.</p>
+            <h3 className="font-display text-2xl font-bold text-white mb-3">
+              Services Update in Progress
+            </h3>
+            <p className="text-fg-2 max-w-md mx-auto mb-8">
+              We are updating our service offerings to serve you better. Please
+              explore all services on our dedicated page.
+            </p>
             <Button to="/services" variant="primary">
               View All Services
             </Button>

@@ -48,6 +48,22 @@ async function fetchApi<T>(
   }
 }
 
+async function safeGet<T>(
+  fetcher: () => Promise<ApiResponse<T>>,
+  fallbackData: T
+): Promise<ApiResponse<T>> {
+  try {
+    return await fetcher();
+  } catch (error) {
+    // Graceful fallback for build-time static generation and network outages
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : 'Server Unavailable',
+      data: fallbackData,
+    };
+  }
+}
+
 export const api = {
   applyForJob: (jobId: string, formData: FormData) => {
     return fetchApi<any>(`/jobs/${jobId}/apply`, {
@@ -68,15 +84,15 @@ export const api = {
     if (params?.page) searchParams.append('page', params.page.toString());
     if (params?.limit) searchParams.append('limit', params.limit.toString());
     const query = searchParams.toString();
-    return fetchApi<IJob[]>(`/jobs${query ? `?${query}` : ''}`, {
+    return safeGet(() => fetchApi<IJob[]>(`/jobs${query ? `?${query}` : ''}`, {
       next: { revalidate: 60 },
-    });
+    }), []);
   },
 
   getJobBySlug: (slug: string) => 
-    fetchApi<IJob>(`/jobs/${slug}`, {
+    safeGet(() => fetchApi<IJob>(`/jobs/${slug}`, {
       next: { tags: [`job:${slug}`], revalidate: 60 },
-    }),
+    }), null as unknown as IJob),
 
   getWorks: (params?: { service?: string; page?: number; limit?: number; isFeatured?: boolean }) => {
     const searchParams = new URLSearchParams();
@@ -85,15 +101,15 @@ export const api = {
     if (params?.limit) searchParams.append('limit', params.limit.toString());
     if (params?.isFeatured !== undefined) searchParams.append('isFeatured', params.isFeatured.toString());
     const query = searchParams.toString();
-    return fetchApi<IWork[]>(`/works${query ? `?${query}` : ''}`, {
+    return safeGet(() => fetchApi<IWork[]>(`/works${query ? `?${query}` : ''}`, {
       next: { revalidate: 60 },
-    });
+    }), []);
   },
     
   getWorkBySlug: (slug: string) => 
-    fetchApi<IWork>(`/works/${slug}`, {
+    safeGet(() => fetchApi<IWork>(`/works/${slug}`, {
       next: { tags: [`work:${slug}`], revalidate: 60 },
-    }),
+    }), null as unknown as IWork),
 
   getArticles: (params?: { category?: string; page?: number; limit?: number; isFeatured?: boolean }) => {
     const searchParams = new URLSearchParams();
@@ -102,28 +118,28 @@ export const api = {
     if (params?.limit) searchParams.append('limit', params.limit.toString());
     if (params?.isFeatured !== undefined) searchParams.append('isFeatured', params.isFeatured.toString());
     const query = searchParams.toString();
-    return fetchApi<IArticle[]>(`/articles${query ? `?${query}` : ''}`, {
+    return safeGet(() => fetchApi<IArticle[]>(`/articles${query ? `?${query}` : ''}`, {
       next: { revalidate: 60 },
-    });
+    }), []);
   },
     
   getArticleBySlug: (slug: string) => 
-    fetchApi<{ article: IArticle; related: IArticle[] }>(`/articles/${slug}`, {
+    safeGet(() => fetchApi<{ article: IArticle; related: IArticle[] }>(`/articles/${slug}`, {
       next: { tags: [`article:${slug}`], revalidate: 60 },
-    }),
+    }), { article: null as unknown as IArticle, related: [] }),
 
   getServices: (params?: { isFeatured?: boolean }) => {
     const searchParams = new URLSearchParams();
     if (params?.isFeatured !== undefined) searchParams.append('isFeatured', params.isFeatured.toString());
     const query = searchParams.toString();
-    return fetchApi<IService[]>(`/services${query ? `?${query}` : ''}`, {
+    return safeGet(() => fetchApi<IService[]>(`/services${query ? `?${query}` : ''}`, {
       next: { revalidate: 60 },
-    });
+    }), []);
   },
     
   getServiceBySlug: (slug: string) => 
-    fetchApi<IService>(`/services/${slug}`, {
+    safeGet(() => fetchApi<IService>(`/services/${slug}`, {
       next: { tags: [`service:${slug}`], revalidate: 60 },
-    }),
+    }), null as unknown as IService),
 };
 
