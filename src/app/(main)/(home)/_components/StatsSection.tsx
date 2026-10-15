@@ -28,7 +28,6 @@ export function StatsSection() {
             <p className="mt-4 max-w-sm text-base leading-relaxed text-fg-2">
               We report on outcomes, not activity — and we hold ourselves to the same standard.
             </p>
-            <p className="mt-6 text-xs text-fg-3">Figures are placeholders pending verification.</p>
           </Reveal>
           <div className="grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:col-span-8">
             {stats.map((stat, i) =>

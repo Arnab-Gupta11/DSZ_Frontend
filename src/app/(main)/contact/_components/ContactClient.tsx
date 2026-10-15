@@ -118,6 +118,8 @@ export function ContactClient() {
                     <a
                       key={s.key}
                       href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       aria-label={s.label}
                       className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-fg-2 transition-colors duration-200 hover:border-line-accent hover:text-cyan"
                     >

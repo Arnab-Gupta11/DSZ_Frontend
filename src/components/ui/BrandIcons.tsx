@@ -60,16 +60,24 @@ export function XIcon({ className = 'h-5 w-5' }: IconProps) {
 
 }
 
+export function TikTokIcon({ className = 'h-5 w-5' }: IconProps) {
+  return (
+    <svg {...common} className={className}>
+      <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+    </svg>
+  );
+}
+
 export function YouTubeIcon({ className = 'h-5 w-5' }: IconProps) {
   return (
     <svg {...common} className={className}>
       <rect x="2.5" y="5.5" width="19" height="13" rx="4" />
       <path d="M10.2 9.4l4.4 2.6-4.4 2.6z" fill="currentColor" />
-    </svg>);
-
+    </svg>
+  );
 }
 
-export function SocialIcon({ name, className }: {name: SocialKey;className?: string;}) {
+export function SocialIcon({ name, className }: { name: SocialKey; className?: string }) {
   switch (name) {
     case 'instagram':
       return <InstagramIcon className={className} />;
@@ -79,6 +87,8 @@ export function SocialIcon({ name, className }: {name: SocialKey;className?: str
       return <LinkedInIcon className={className} />;
     case 'x':
       return <XIcon className={className} />;
+    case 'tiktok':
+      return <TikTokIcon className={className} />;
     case 'youtube':
       return <YouTubeIcon className={className} />;
   }

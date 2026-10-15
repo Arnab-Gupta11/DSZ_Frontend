@@ -46,7 +46,7 @@ export function WhySection() {
                       src={current.image}
                       alt={current.imageAlt}
                       fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      sizes="(max-width: 1024px) 0px, (max-width: 1280px) 50vw, 600px"
                       className="object-cover"
                     />
                   </motion.div>

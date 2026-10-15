@@ -29,7 +29,7 @@ export function PillarItem({ pillar, index, active, onActivate }: PillarItemProp
             src={pillar.image}
             alt={pillar.imageAlt}
             fill
-            sizes="100vw"
+            sizes="(max-width: 768px) 92vw, (max-width: 1024px) 768px, 0px"
             className="object-cover"
           />
         </div>

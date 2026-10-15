@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 import { ArrowUpIcon } from "lucide-react";
@@ -21,6 +21,37 @@ const serviceShortNames: Record<string, string> = {
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const [dynamicServices, setDynamicServices] = useState<{ title: string; slug: string }[]>(() =>
+    services.slice(0, 7).map((s) => ({
+      title: serviceShortNames[s.slug] || s.title,
+      slug: s.slug,
+    }))
+  );
+
+  useEffect(() => {
+    let isMounted = true;
+    import("@/lib/api/client").then(({ api }) => {
+      api
+        .getServices()
+        .then((res) => {
+          if (isMounted && res.data && res.data.length > 0) {
+            setDynamicServices(
+              res.data.slice(0, 7).map((s) => ({
+                title: serviceShortNames[s.slug] || s.title,
+                slug: s.slug,
+              }))
+            );
+          }
+        })
+        .catch(() => {
+          // Fallback to static services
+        });
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <footer className="relative border-t border-line bg-navy pt-20 lg:pt-24">
@@ -42,6 +73,8 @@ export function Footer() {
                 <li key={s.key}>
                   <a
                     href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     aria-label={s.label}
                     className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-fg-2 transition-colors duration-200 hover:border-line-accent hover:text-cyan"
                   >
@@ -71,13 +104,13 @@ export function Footer() {
           <div className="lg:col-span-3">
             <h2 className="text-sm font-medium text-fg-3">Services</h2>
             <ul className="mt-5 space-y-3">
-              {services.map((s) => (
+              {dynamicServices.slice(0, 7).map((s) => (
                 <li key={s.slug}>
                   <Link
                     href={`/services#${s.slug}`}
                     className="text-[15px] text-fg-2 transition-colors duration-200 hover:text-white"
                   >
-                    {serviceShortNames[s.slug]}
+                    {s.title}
                   </Link>
                 </li>
               ))}

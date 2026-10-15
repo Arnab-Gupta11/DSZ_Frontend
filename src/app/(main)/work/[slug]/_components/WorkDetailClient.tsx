@@ -177,18 +177,19 @@ export function WorkDetailClient({
             >
               {project.gallery?.slice(0, 2).map((img, i) => (
                 <motion.div
-                  key={img.src}
-                  initial={{ clipPath: "inset(0% 0% 100% 0% round 20px)" }}
-                  whileInView={{ clipPath: "inset(0% 0% 0% 0% round 20px)" }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.8, ease: easeOut, delay: i * 0.1 }}
+                  key={img.src || i}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "0px 0px 100px 0px", amount: 0.05 }}
+                  transition={{ duration: 0.6, ease: easeOut, delay: i * 0.1 }}
                   className={`relative overflow-hidden rounded-[20px] bg-navy-700 ${i === 1 ? "sm:mt-16" : ""}`}
                 >
                   <Image
                     src={img.src}
-                    alt={img.alt}
+                    alt={img.alt || `${project.title} execution image ${i + 1}`}
                     width={800}
                     height={1000}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
                     className="aspect-4/5 w-full object-cover"
                   />
                 </motion.div>

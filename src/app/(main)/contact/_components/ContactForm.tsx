@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { services } from "@/constants/services";
+import { site } from "@/constants/site";
 import { easeOut } from "@/utils/motion";
 
 type Status = "idle" | "submitting" | "success";
@@ -135,8 +136,15 @@ export function ContactForm() {
             Thanks — we&apos;ve got it.
           </h2>
           <p className="mt-3 max-w-md text-fg-2">
-            We&apos;ll reply within one working day. For anything urgent,
-            message us on WhatsApp.
+            We&apos;ll reply within one working day. For anything urgent,{" "}
+            <a
+              href={site.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-cyan underline transition-colors hover:text-cyan-soft"
+            >
+              message us on WhatsApp
+            </a>.
           </p>
           <button
             type="button"

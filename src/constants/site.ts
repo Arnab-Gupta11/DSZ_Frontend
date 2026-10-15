@@ -10,10 +10,10 @@ export const site = {
   url: "https://www.digitalsoftzone.com",
   tagline:
     "We help brands get noticed with product promo videos, AI-powered content, and branding that sells.",
-  email: "[EMAIL ADDRESS]",
-  phone: "[PHONE NUMBER]",
-  whatsappNumber: "[WHATSAPP NUMBER]",
-  whatsappUrl: "https://wa.me/",
+  email: "info.digitalsoftzone@gmail.com",
+  phone: "+880 1533-181842",
+  whatsappNumber: "+880 1533-181842",
+  whatsappUrl: "https://wa.me/8801533181842",
   addressLine: "Software Technology Park",
   city: "Chittagong, Bangladesh",
   logoSrc: "/logo.png",
@@ -31,9 +31,29 @@ export const navLinks: NavItem[] = [
 ];
 
 export const socialLinks: SocialLink[] = [
-  { key: "instagram", label: "Instagram", href: "#" },
-  { key: "facebook", label: "Facebook", href: "#" },
-  { key: "linkedin", label: "LinkedIn", href: "#" },
-  { key: "x", label: "X", href: "#" },
-  { key: "youtube", label: "YouTube", href: "#" },
+  {
+    key: "facebook",
+    label: "Facebook",
+    href: "https://www.facebook.com/digitalsoftzone",
+  },
+  {
+    key: "instagram",
+    label: "Instagram",
+    href: "https://www.instagram.com/digitalsoftzonebd/",
+  },
+  {
+    key: "x",
+    label: "X",
+    href: "https://x.com/DGsoftzone",
+  },
+  {
+    key: "tiktok",
+    label: "TikTok",
+    href: "https://www.tiktok.com/@digitalsoftzone.official",
+  },
+  {
+    key: "linkedin",
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/digitalsoftzone/",
+  },
 ];

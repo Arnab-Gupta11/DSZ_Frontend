@@ -58,6 +58,8 @@ export interface Testimonial {
   company: string;
   role: string;
   initials: string;
+  category?: string;
+  service?: string;
 }
 
 export type ArticleCategory = 'Marketing Tips' | 'AI Tools' | 'Case Studies' | 'DSZ News';
@@ -114,7 +116,7 @@ export interface NavItem {
   to: string;
 }
 
-export type SocialKey = 'instagram' | 'facebook' | 'linkedin' | 'x' | 'youtube';
+export type SocialKey = 'instagram' | 'facebook' | 'linkedin' | 'x' | 'tiktok' | 'youtube';
 
 export interface SocialLink {
   key: SocialKey;
