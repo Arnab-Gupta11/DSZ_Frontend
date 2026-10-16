@@ -6,6 +6,9 @@ import { Volume2Icon, VolumeXIcon } from 'lucide-react';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useReducedMotion } from "framer-motion";
 
+const SHOWREEL_VIDEO_URL =
+  "https://res.cloudinary.com/wmlrxxtd/video/upload/v1792123967/dsz/dsz-showreel.mp4";
+
 export function ScrollVideoSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -85,7 +88,7 @@ export function ScrollVideoSection() {
         <div className="mx-auto w-[92vw] lg:w-[65vw] max-w-6xl overflow-hidden rounded-2xl lg:rounded-3xl bg-navy-800 shadow-2xl relative group">
           <video
             ref={videoRef}
-            src="/dsz.mp4"
+            src={SHOWREEL_VIDEO_URL}
             preload="metadata"
             muted={muted}
             loop
@@ -129,7 +132,7 @@ export function ScrollVideoSection() {
 
           <video
             ref={videoRef}
-            src="/dsz.mp4"
+            src={SHOWREEL_VIDEO_URL}
             preload="metadata"
             muted={muted}
             loop
